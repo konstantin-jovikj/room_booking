@@ -40,7 +40,7 @@ class RegisterForm extends Component
         return view('livewire.register-form');
     }
 
-    public function submit()
+    public function register()
     {
 
         $this->validate();
