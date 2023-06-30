@@ -16,10 +16,8 @@
                 @livewireStyles
     </head>
     <body class="antialiased">
-        @include('layouts.navigation')
+        <livewire:navigation />
+        <livewire:splash/>
 
-        <div id="splash" >
-            <img src="{{asset('img/splash.jpg')}}" alt="" class="w-full h-full bg-cover bg-no-repeat">
-        </div>
     </body>
 </html>
