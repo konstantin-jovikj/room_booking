@@ -59,7 +59,6 @@ class RegisterForm extends Component
         $user->save();
 
         return redirect()->route('login')->with('success', 'Your Account was successfully created');
-        // session()->flash('message', 'Your Account was successfully created');
 
         $this->first_name = '';
         $this->last_name = '';
