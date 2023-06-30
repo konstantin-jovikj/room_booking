@@ -18,6 +18,7 @@
     <body class="antialiased">
         <livewire:navigation />
         <livewire:splash/>
+        
 
     </body>
 </html>
