@@ -1,8 +1,13 @@
-<form wire:submit.prevent="authenticate" class=" mx-auto p-2 mt-2 rounded  shadow" >
+<form wire:submit.prevent="authenticate" class=" mx-auto p-2 mt-2 rounded  shadow">
     @csrf
-    @if (session()->has('message'))
+    @if (session()->has('error'))
+        <div class="bg-rose-500 text-white py-3 px-4 mb-4">
+            {{ session('error') }}
+        </div>
+    @endif
+    @if (session()->has('success'))
         <div class="bg-emerald-500 text-white py-3 px-4 mb-4">
-            {{ session('message') }}
+            {{ session('success') }}
         </div>
     @endif
 
@@ -24,10 +29,11 @@
 
     <div class="flex justify-between items-center">
         @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                href="{{ route('password.request') }}">
+                {{ __('Forgot your password?') }}
+            </a>
+        @endif
         <x-primary-button>register</x-primary-button>
     </div>
-    </form>
+</form>

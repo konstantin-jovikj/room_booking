@@ -29,7 +29,8 @@ class LoginForm extends Component
             return redirect()->intended('/dashboard');
         } else {
             // Authentication failed
-            $this->addError('authentication', 'Invalid credentials.');
+            // $this->addError('authentication', 'Invalid credentials.');
+            session()->flash('error', 'Invalid credentials');
         }
 
     }
