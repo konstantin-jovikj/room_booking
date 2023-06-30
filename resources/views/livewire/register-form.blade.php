@@ -1,4 +1,4 @@
-<form wire:submit.prevent="register" class=" mx-auto p-4 mt-4 rounded border shadow" >
+<form wire:submit.prevent="register" class=" mx-auto p-2 mt-2 rounded  shadow" >
     @csrf
     @if (session()->has('message'))
         <div class="bg-emerald-500 text-white py-3 px-4 mb-4">
@@ -81,6 +81,7 @@
 
 
 
-
-    <button type="submit" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 rounded text-white">Submit</button>
-</form>
+    <div class="flex justify-center items-center">
+        <x-primary-button>register</x-primary-button>
+    </div>
+    </form>
