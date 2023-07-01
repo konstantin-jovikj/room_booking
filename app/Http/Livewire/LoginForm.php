@@ -26,7 +26,12 @@ class LoginForm extends Component
         ];
         if (Auth::attempt($credentials)) {
             // Authentication successful
-            return redirect()->intended('/dashboard');
+            if(Auth::user()->role_id == 2)
+            {
+                return redirect()->intended('/dashboard');
+            }else{
+                return redirect()->intended('/dashboard/admin');
+            }
         } else {
             // Authentication failed
             // $this->addError('authentication', 'Invalid credentials.');

@@ -34,6 +34,6 @@
                 {{ __('Forgot your password?') }}
             </a>
         @endif
-        <x-primary-button>register</x-primary-button>
+        <x-primary-button>Login</x-primary-button>
     </div>
 </form>

@@ -23,7 +23,7 @@ class RegisterForm extends Component
     protected $rules = [
         'first_name' => ['required', 'min:2'],
         'last_name' => ['required', 'min:2'],
-        'email' => ['required', 'email'],
+        'email' => ['required', 'email','unique:'.User::class],
         'password' => ['required', 'min:8'],
         'phone' => ['required', 'min:8'],
         'user_address' => ['required'],
