@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\BildingImagesController;
 use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Livewire\BuildingImage;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +35,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/buildings', [BuildingController::class, 'index'])->name('index.buildings');
+    Route::get('/building/create', [BuildingController::class, 'create'])->name('create.building');
+
+    Route::get('/building/image/{building}',[BildingImagesController::class,'create'])->name('create.buildingimage');
+    Route::post('/building/image/store/{building}', [BildingImagesController::class,'store'])->name('store.buildingimage');
 });
 
 require __DIR__.'/auth.php';

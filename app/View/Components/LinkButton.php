@@ -6,28 +6,21 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-;
-class ViewBuildings extends Component
+class LinkButton extends Component
 {
     /**
      * Create a new component instance.
      */
-
-    public $buildings;
-
-
-    public function __construct($buildings)
+    public function __construct()
     {
-        // var_dump($buildings);
-        $this->buildings = $buildings;
+        //
     }
-
 
     /**
      * Get the view / contents that represent the component.
      */
     public function render(): View|Closure|string
     {
-        return view('components.view-buildings');
+        return view('components.link-button');
     }
 }

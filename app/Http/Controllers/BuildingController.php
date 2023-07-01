@@ -12,7 +12,9 @@ class BuildingController extends Controller
      */
     public function index()
     {
-        $buildings = Building::all();
+        // $buildings = Building::all();
+        $buildings = Building::with('buildingImages')->get();
+        // dd($buildings);
         return view('buildings.view-buildings', compact('buildings'));
     }
 
@@ -21,7 +23,7 @@ class BuildingController extends Controller
      */
     public function create()
     {
-        //
+        return view('buildings.add-building');
     }
 
     /**
