@@ -30,24 +30,29 @@ class BildingImagesController extends Controller
      */
     public function store(Request $request, Building $building)
     {
-        // $buildingimages = BildingImages::where('building_id', $building->id)->count();
-        // dd($buildingimages);
-        // $buildingimages += 1;
-        // $fileName = 'building' . Auth::id() . '-'. $buildingimages . '.' . $request->building_image->extension();
-        $fileName = Auth::id() . '.' . $request->building_image->extension();
-        $request->building_image->storeAs('public/images', $fileName);
+        $buildingimages = BildingImages::where('building_id', $building->id)->count();
+        $buildingimages += 1;
+
 
         $building_image = new BildingImages();
 
+        $uploadedFile = $request->file('building_image');
+        $extension = $uploadedFile->extension();
+
+        $fileName = 'building-' . Auth::id() . '-'. $building->id . '-'. $buildingimages . '.' . $request->building_image->extension();
+        // $fileName = Auth::id() . '.' . $extension;
+        $request->building_image->storeAs('public/images', $fileName);
+
+
+
         $building_image->building_id = $building->id;
-        $building_image->building_image = $request->building_image;
+        $building_image->building_image = $fileName;
 
         if ($building_image->save()) {
             return redirect()->route('index.buildings')->with('success', 'The Image succesffuly added');
         } else {
             return redirect()->route('index.buildings')->with('error', 'Something went wrong. Image cannot be added');
         }
-
     }
 
     /**

@@ -9,7 +9,7 @@
             <div class="p-8 bg-white w-1/2 shadow-lg rounded-lg">
                 <h2 class="text-center text-lg font-bold text-red-800 uppercase">Select building image</h2>
 
-                <form class=" mx-auto p-2 mt-2 rounded " method="POST" action="{{route('store.buildingimage', $building->id)}}">
+                <form class=" mx-auto p-2 mt-2 rounded " method="POST" action="{{route('store.buildingimage', $building->id)}}" enctype="multipart/form-data">
                     @csrf
                     @if (session()->has('message'))
                         <div class="bg-emerald-500 text-white py-3 px-4 mb-4">
