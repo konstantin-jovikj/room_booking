@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BildingImages;
 use App\Models\Building;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,10 @@ class BuildingController extends Controller
     {
         // $buildings = Building::all();
         $buildings = Building::with('buildingImages')->get();
+        // $cardImage = BildingImages::first();
+        $cardImage =  Building::with('buildingImages')->first();
         // dd($buildings);
-        return view('buildings.view-buildings', compact('buildings'));
+        return view('buildings.view-buildings', compact('buildings', 'cardImage'));
     }
 
     /**
