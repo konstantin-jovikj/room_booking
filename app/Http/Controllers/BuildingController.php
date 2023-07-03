@@ -52,7 +52,7 @@ class BuildingController extends Controller
      */
     public function edit(Building $building)
     {
-        //
+        
     }
 
     /**
@@ -68,6 +68,10 @@ class BuildingController extends Controller
      */
     public function destroy(Building $building)
     {
-        //
+        if ($building->delete()) {
+            return redirect()->route('index.buildings')->with('success', 'The Building was succesffuly deleted');
+        } else {
+            return redirect()->route('index.buildings')->with('error', 'Something went wrong. Building cannot be deleted');
+        }
     }
 }

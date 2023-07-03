@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\BildingImagesController;
-use App\Http\Controllers\BuildingController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Livewire\EditBuilding;
 use App\Http\Livewire\BuildingImage;
-use Database\Seeders\BildingImagesSeeder;
 use Illuminate\Support\Facades\Route;
+use Database\Seeders\BildingImagesSeeder;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BuildingController;
+use App\Http\Controllers\BildingImagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/buildings', [BuildingController::class, 'index'])->name('index.buildings');
     Route::get('/building/create', [BuildingController::class, 'create'])->name('create.building');
     Route::get('/building/show/{building}', [BuildingController::class, 'show'])->name('view.building');
+    Route::delete('/building/delete/{building}', [BuildingController::class, 'destroy'])->name('delete.building');
+    Route::get('/building/edit/{building}', EditBuilding::class)->name('edit.building');
 
     Route::get('/building/image/{building}',[BildingImagesController::class,'create'])->name('create.buildingimage');
     Route::post('/building/image/store/{building}', [BildingImagesController::class,'store'])->name('store.buildingimage');

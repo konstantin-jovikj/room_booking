@@ -37,8 +37,12 @@
                                         class="bg-indigo-600 my-2 w-full text-center">Edit Building</x-link-button>
                                 </div>
                                 <div class="w-1/2 px-1">
-                                    <x-link-button href="{{ route('create.buildingimage', $single_building->id) }}"
-                                        class="bg-red-600 my-2 w-full text-center">Delete Building</x-link-button>
+                                    <form action="{{ route('delete.building', $single_building->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <x-primary-button class="bg-red-600 my-2 w-full text-center">Delete Building
+                                        </x-primary-button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

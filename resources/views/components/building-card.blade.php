@@ -1,21 +1,21 @@
-<div class="">
+<div class="w-full">
     <div class="px-10 py-4">
         <x-link-button href="{{ route('create.building') }}">Add new Building</x-link-button>
     </div>
 
     @if (session()->has('error'))
-        <div class="bg-rose-500 text-white py-3 px-4 mb-4">
+        <div class="bg-rose-500 text-white py-3 px-4 mb-4 w-full">
             {{ session('error') }}
         </div>
     @endif
     @if (session()->has('success'))
-        <div class="bg-emerald-500 text-white py-3 px-4 mb-4">
+        <div class="bg-emerald-500 text-white py-3 px-4 mb-4 w-full">
             {{ session('success') }}
         </div>
     @endif
 
 
-    <div class="min-h-screen flex justify-center items-center py-20">
+    <div class="min-h-screen flex justify-center items-center w-full">
         <div class="md:px-4 md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 space-y-4 md:space-y-0">
             @if (isset($buildings))
                 @foreach ($buildings as $building)
@@ -66,12 +66,16 @@
                         </div>
                         <div class="w-full flex justify-center items-center ">
                             <div class="w-1/2 px-1">
-                                <x-link-button href="{{ route('create.buildingimage', $building->id) }}"
+                                <x-link-button href="{{ route('edit.building', $building->id) }}"
                                     class="bg-indigo-600 my-2 w-full text-center">Edit Building</x-link-button>
                             </div>
                             <div class="w-1/2 px-1">
-                                <x-link-button href="{{ route('create.buildingimage', $building->id) }}"
-                                    class="bg-red-600 my-2 w-full text-center">Delete Building</x-link-button>
+                                <form action="{{ route('delete.building', $building->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <x-primary-button class="bg-red-600 my-2 w-full text-center">Delete Building
+                                    </x-primary-button>
+                                </form>
                             </div>
                         </div>
                     </div>
