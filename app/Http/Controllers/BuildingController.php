@@ -42,7 +42,9 @@ class BuildingController extends Controller
      */
     public function show(Building $building)
     {
-        //
+        $building = Building::with('buildingImages')->where('id', $building->id)->get();
+        // dd($building);
+        return view('buildings.show-building details', compact('building'));
     }
 
     /**

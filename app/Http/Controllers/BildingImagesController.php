@@ -84,6 +84,11 @@ class BildingImagesController extends Controller
      */
     public function destroy(BildingImages $bildingImages)
     {
-        //
+
+        if ($bildingImages->delete()) {
+            return redirect()->route('index.buildings')->with('success', 'The Image was succesffuly deleted');
+        } else {
+            return redirect()->route('index.buildings')->with('error', 'Something went wrong. Image cannot be added');
+        }
     }
 }

@@ -37,6 +37,14 @@
             </div>
 
             <div class="mb-4">
+                <input type="text" class="w-full border @error('building_zip') border-red-500 @enderror"
+                    wire:model.debounce.500ms="building_place" placeholder="Building Place">
+                @error('building_place')
+                    <span class="text-red-500">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="mb-4">
                 <input type="text" class="w-full border @error('building_country') border-red-500 @enderror"
                     wire:model.debounce.500ms="building_country" placeholder="Building Country">
                 @error('building_country')
