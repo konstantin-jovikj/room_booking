@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('building_id');
             $table->string('room_number');
-            $table->string('room_description');
+            $table->text('room_description')->nullable();
+            $table->decimal('price', 8, 2);
             $table->decimal('avg_rate')->nullable();
             $table->timestamps();
 

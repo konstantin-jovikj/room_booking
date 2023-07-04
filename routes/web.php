@@ -7,6 +7,7 @@ use Database\Seeders\BildingImagesSeeder;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\BildingImagesController;
+use App\Http\Controllers\RoomController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/building/image/{building}',[BildingImagesController::class,'create'])->name('create.buildingimage');
     Route::post('/building/image/store/{building}', [BildingImagesController::class,'store'])->name('store.buildingimage');
     Route::delete('building/image/delete/{bildingImages}', [BildingImagesController::class, 'destroy'])->name('delete.buildingimage');
+
+    Route::get('/rooms', [RoomController::class, 'index'])->name('index.rooms');
+    Route::get('/room/create', [RoomController::class, 'create'])->name('create.room');
+    Route::post('/room/store/',[RoomController::class,'store'])->name('store.room');
 });
 
 require __DIR__.'/auth.php';

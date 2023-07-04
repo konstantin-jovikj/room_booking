@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Room;
 use App\Models\BildingImages;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,5 +22,10 @@ class Building extends Model
     public function buildingImages()
     {
         return $this->hasMany(BildingImages::class);
+    }
+
+    public function rooms()
+    {
+        return $this->hasMany(Room::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Building;
 use App\Models\Room;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class RoomController extends Controller
      */
     public function index()
     {
-        //
+        $buildings = Building::all();
+        $rooms = Room::with('building')->get();
+        return view('rooms.view-rooms', compact('buildings', 'rooms'));
     }
 
     /**
@@ -20,7 +23,8 @@ class RoomController extends Controller
      */
     public function create()
     {
-        //
+        $buildingsId = Building::all();
+        return view('rooms.add-room', compact('buildingsId'));
     }
 
     /**
@@ -28,7 +32,18 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $room = new Room();
+
+        $room->building_id = $request->buildingId;
+        $room->room_number = $request->room_number;
+        $room->room_description = $request->room_description;
+        $room->price = $request->room_price;
+
+        if ($room->save()) {
+            return redirect()->route('index.rooms')->with('success', 'The Room was succesffuly added');
+        } else {
+            return redirect()->route('index.rooms')->with('error', 'Something went wrong. Room cannot be added');
+        }
     }
 
     /**
