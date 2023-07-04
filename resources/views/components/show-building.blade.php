@@ -33,7 +33,7 @@
                             </div>
                             <div class="w-full flex justify-center items-center">
                                 <div class="w-1/2 px-1">
-                                    <x-link-button href="{{ route('create.buildingimage', $single_building->id) }}"
+                                    <x-link-button href="{{ route('edit.building', $single_building->id) }}"
                                         class="bg-indigo-600 my-2 w-full text-center">Edit Building</x-link-button>
                                 </div>
                                 <div class="w-1/2 px-1">

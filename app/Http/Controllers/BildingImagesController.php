@@ -30,30 +30,32 @@ class BildingImagesController extends Controller
      */
     public function store(Request $request, Building $building)
     {
-        $buildingimages = BildingImages::where('building_id', $building->id)->count();
-        $buildingimages += 1;
+        // Check if a file was selected
+        if ($request->hasFile('building_image')) {
+            $buildingimages = BildingImages::where('building_id', $building->id)->count();
+            $buildingimages += 1;
 
+            $building_image = new BildingImages();
 
-        $building_image = new BildingImages();
+            $uploadedFile = $request->file('building_image');
+            $extension = $uploadedFile->extension();
 
-        $uploadedFile = $request->file('building_image');
-        $extension = $uploadedFile->extension();
+            $fileName = 'building-' . Auth::id() . '-' . $building->id . '-' . $buildingimages . '.' . $request->building_image->extension();
+            $request->building_image->storeAs('public/images', $fileName);
 
-        $fileName = 'building-' . Auth::id() . '-'. $building->id . '-'. $buildingimages . '.' . $request->building_image->extension();
-        // $fileName = Auth::id() . '.' . $extension;
-        $request->building_image->storeAs('public/images', $fileName);
+            $building_image->building_id = $building->id;
+            $building_image->building_image = $fileName;
 
-
-
-        $building_image->building_id = $building->id;
-        $building_image->building_image = $fileName;
-
-        if ($building_image->save()) {
-            return redirect()->route('index.buildings')->with('success', 'The Image succesffuly added');
+            if ($building_image->save()) {
+                return redirect()->route('index.buildings')->with('success', 'The Image was successfully added');
+            } else {
+                return redirect()->route('index.buildings')->with('error', 'Something went wrong. The image could not be added');
+            }
         } else {
-            return redirect()->route('index.buildings')->with('error', 'Something went wrong. Image cannot be added');
+            return redirect()->route('index.buildings')->with('error', 'No file selected for upload');
         }
     }
+
 
     /**
      * Display the specified resource.
