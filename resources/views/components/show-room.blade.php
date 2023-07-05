@@ -1,4 +1,5 @@
 <div class="min-w-screen flex items-center p-5 lg:p-10 relative w-full">
+    {{-- @dd($room) --}}
     <div class="w-full max-w-6xl rounded bg-white shadow-xl p-10 lg:p-20 mx-auto text-gray-800 relative md:text-left">
         <div class="md:flex items-center -mx-10">
             @foreach ($room as $single_room)
@@ -33,8 +34,8 @@
                             </div>
                             <div class="w-full flex justify-center items-center">
                                 <div class="w-1/2 px-1">
-                                    <x-link-button href="{{ route('edit.building', $single_room->id) }}"
-                                        class="bg-indigo-600 my-2 w-full text-center">Edit Building</x-link-button>
+                                    <x-link-button href="{{ route('edit.room', $single_room->id) }}"
+                                        class="bg-indigo-600 my-2 w-full text-center">Edit room</x-link-button>
                                 </div>
                                 <div class="w-1/2 px-1">
                                     <form action="{{ route('delete.room', $single_room->id) }}" method="POST">
@@ -47,33 +48,21 @@
                             </div>
                         </div>
                         <div>
-                            {{-- <div class="inline-block align-bottom mr-5">
-                                <span class="text-md leading-none align-baseline">Building Name:</span>
-                                <span
-                                    class="font-bold text-lg leading-none align-baseline pl-4">{{ $single_building->building_name }}</span>
+                            <div class="align-bottom mr-5 mb-2">
+                                <p class="font-bold text-lg leading-none align-baseline pl-4"><span class="text-md leading-none align-baseline font-normal">Building Name : </span>{{ $single_room->building->building_name}}</p>
                             </div>
 
-                            <div class="inline-block align-bottom mr-5">
-                                <span class="text-md leading-none align-baseline">Building Address:</span>
-                                <span
-                                    class="font-bold text-lg leading-none align-baseline pl-4">{{ $single_building->building_address }}</span>
+                            <div class="align-bottom mr-5 mb-2">
+                                <p class="font-bold text-lg leading-none align-baseline pl-4"><span class="text-md leading-none align-baseline font-normal">Room Number : </span>{{ $single_room->room_number }}</p>
                             </div>
-                            <div class="inline-block align-bottom mr-5">
-                                <span class="text-md leading-none align-baseline">Building ZIP:</span>
-                                <span
-                                    class="font-bold text-lg leading-none align-baseline pl-4">{{ $single_building->building_zip }}</span>
-                            </div>
-                            <div class="inline-block align-bottom mr-5">
-                                <span class="text-md leading-none align-baseline">Building Place:</span>
-                                <span
-                                    class="font-bold text-lg leading-none align-baseline pl-4">{{ $single_building->building_place }}</span>
-                            </div>
-                            <div class="inline-block align-bottom mr-5">
-                                <span class="text-md leading-none align-baseline">Building Country:</span>
-                                <span
-                                    class="font-bold text-lg leading-none align-baseline pl-4">{{ $single_building->building_country }}</span>
-                            </div> --}}
 
+                            <div class="align-bottom mr-5 mb-2">
+                                <p class="font-bold text-lg leading-none align-baseline pl-4 text-red-600"><span class="text-md leading-none align-baseline font-normal text-black">Price : </span>{{ $single_room->price }}</p>
+                            </div>
+
+                            <div class="align-bottom mr-5 mb-2">
+                                <p class="font-bold text-lg leading-none align-baseline pl-4"><span class="text-md leading-none align-baseline font-normal">Room Description : </span>{{ $single_room->room_description }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>

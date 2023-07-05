@@ -51,7 +51,7 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
-        $room = Room::with('roomImages')->where('id', $room->id)->get();
+        $room = Room::with('roomImages','building')->where('id', $room->id)->get();
         return view('rooms.show-room-details', compact('room'));
     }
 

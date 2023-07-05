@@ -10,20 +10,25 @@
                 </div>
             @endif
 
-                {{-- @dd($room) --}}
+                {{-- @dd($buildings) --}}
 
             {{-- SELECT BUILDING--}}
 
-            {{-- <div class="mb-4">
-                <select class="w-full border mb-4 @error('buildingId') border-red-500 @enderror"
-                    name="buildingId" placeholder="Select a Building">
+            <div class="mb-4">
+                <select class="w-full border mb-4 @error('building_id') border-red-500 @enderror"
+                    wire:model.debounce.500ms="building_id" placeholder="Select a Building">
                     <option value="">Select a Building</option>
-                    @foreach ($buildingsId as $building)
-                        <option value="{{ $building->id }}">{{ $building->building_name }}</option>
+                    @foreach ($buildings as $building)
+                        <option value="{{ $building->id }}"
+                            {{ ($building->id == $room->building_id) ? 'selected="selected"' : '' }}>
+                            {{ $building->building_name }}
+                        </option>
                     @endforeach
-                </select @error('buildingId') <span class="text-red-500">{{ $message }}</span>
+                </select>
+                @error('building_id')
+                    <span class="text-red-500">{{ $message }}</span>
                 @enderror
-            </div> --}}
+            </div>
 
             {{-- SELECT BUILDING--}}
 
