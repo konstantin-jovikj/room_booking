@@ -2,15 +2,16 @@
     {{-- <div class="px-10 py-4">
         <x-link-button href="{{ route('create.room') }}">Add Room</x-link-button>
     </div> --}}
-
-    @if (isset($buildings) && count($buildings) == 0)
-        <h2 class="text-xl pl-10 bg-orange-500 text-white p-2">
-            You have to add building and then you can add rooms
-        </h2>
-    @else
-        <h2 class="text-xl pl-10 bg-emerald-500 text-white p-2">
-            You have {{ count($buildings) }} building(s) available
-        </h2>
+    @if (Auth::check() && Auth::user()->role_id == 1)
+        @if (isset($buildings) && count($buildings) == 0)
+            <h2 class="text-xl pl-10 bg-orange-500 text-white p-2">
+                You have to add building and then you can add rooms
+            </h2>
+        @else
+            <h2 class="text-xl pl-10 bg-emerald-500 text-white p-2">
+                You have {{ count($buildings) }} building(s) available
+            </h2>
+        @endif
     @endif
 
     @if (session()->has('error'))
@@ -26,10 +27,12 @@
 
 
     {{-- ROOM CARD --}}
-    @if (isset($buildings) && count($buildings) != 0)
-        <div class="px-10 py-4">
-            <x-link-button href="{{ route('create.room') }}">Add Room</x-link-button>
-        </div>
+    @if (Auth::check() && Auth::user()->role_id == 1)
+        @if (isset($buildings) && count($buildings) != 0)
+            <div class="px-10 py-4">
+                <x-link-button href="{{ route('create.room') }}">Add Room</x-link-button>
+            </div>
+        @endif
     @endif
 
     @if (isset($rooms) && count($rooms) == 0)
@@ -73,51 +76,52 @@
                         <div class="my-4 w-full">
                             <div class="flex space-x-1 items-center">
                                 <span>
-                                    <i class="fa-sharp fa-regular fa-address-book text-indigo-600 text-xl"></i>
-
+                                    <i class="fa-solid fa-pen-to-square text-indigo-600 text-xl"></i>
                                 </span>
                                 <div>{{ $room->room_description }}</div>
                             </div>
 
                             <div class="flex space-x-1 items-center">
                                 <span>
-                                    <i class="fa-sharp fa-regular fa-address-book text-indigo-600 text-xl"></i>
-
+                                    <i class="fa-solid fa-euro-sign text-red-600 text-xl"></i>
                                 </span>
                                 <p class="text-red-500 text-xl font-extrabold">{{ $room->price }}</p>
                             </div>
 
-                            {{-- <div class="flex space-x-1 items-center">
-                            <span>
-                                <i class="fa-solid fa-location-dot text-indigo-600 text-2xl"></i>
-                            </span>
-                            <p>{{ $building->building_zip }} - {{ $building->building_place }} -
-                                {{ $building->building_country }}</p>
-                        </div> --}}
-                            <div class="w-full flex justify-center items-center ">
-                                <div class="w-1/2 px-1">
-                                    <x-link-button href="{{ route('create.roomimage', $room->id) }}"
-                                        class="bg-green-600 my-2 w-full text-center">Add image</x-link-button>
+                            {{-- ADMIN BUTTONS --}}
+                            @if (Auth::check() && Auth::user()->isAdmin())
+                                <div>
+                                    <div class="w-full flex justify-center items-center ">
+                                        <div class="w-1/2 px-1">
+                                            <x-link-button href="{{ route('create.roomimage', $room->id) }}"
+                                                class="bg-green-600 my-2 w-full text-center">Add image
+                                            </x-link-button>
+                                        </div>
+                                        <div class="w-1/2 px-1">
+                                            <x-link-button href="{{ route('view.room', $room->id) }}"
+                                                class="bg-orange-600 my-2 w-full text-center">View Room
+                                            </x-link-button>
+                                        </div>
+                                    </div>
+                                    <div class="w-full flex justify-center items-center ">
+                                        <div class="w-1/2 px-1">
+                                            <x-link-button href="{{ route('edit.room', $room->id) }}"
+                                                class="bg-indigo-600 my-2 w-full text-center">Edit Room
+                                            </x-link-button>
+                                        </div>
+                                        <div class="w-1/2 px-1">
+                                            <form action="{{ route('delete.building', $room->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <x-primary-button class="bg-red-600 my-2 w-full text-center">Delete
+                                                    Room
+                                                </x-primary-button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="w-1/2 px-1">
-                                    <x-link-button href="{{ route('view.room', $room->id) }}"
-                                        class="bg-orange-600 my-2 w-full text-center">View Room</x-link-button>
-                                </div>
-                            </div>
-                            <div class="w-full flex justify-center items-center ">
-                                <div class="w-1/2 px-1">
-                                    <x-link-button href="{{ route('edit.room', $room->id) }}"
-                                        class="bg-indigo-600 my-2 w-full text-center">Edit Room</x-link-button>
-                                </div>
-                                <div class="w-1/2 px-1">
-                                    <form action="{{ route('delete.building', $room->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <x-primary-button class="bg-red-600 my-2 w-full text-center">Delete Room
-                                        </x-primary-button>
-                                    </form>
-                                </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                 @endforeach

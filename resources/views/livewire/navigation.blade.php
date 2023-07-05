@@ -8,8 +8,31 @@
                     {{-- <a href="{{ route('dashboard') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a> --}}
-                    <livewire:logo />
+                    @if (Auth::check() == true && Auth::user()->isAdmin() == false)
+                        <a href="{{ route('dashboard') }}">
+                            <livewire:logo />
+                        </a>
+                    @endif
+                    @if(Auth::check() == true && Auth::user()->isAdmin() == true)
+                        <a href="{{ route('admin.dashboard') }}">
+                            <livewire:logo />
+                        </a>
+                    @endif
+
+                        @if(Auth::check() == false)
+                        <a href="{{ route('dashboard') }}">
+                            <livewire:logo />
+                        </a>
+                        @endif
                     <!-- Navigation Links -->
+
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex ">
+                        <x-nav-link :href="route('home.page')" :active="request()->routeIs('home.page')">
+                            {{ __('Home') }}
+                        </x-nav-link>
+                    </div>
+
+
                     @if (Auth::check())
                         @if (Auth::user()->role_id == 2)
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex ">
@@ -17,7 +40,8 @@
                                     {{ __('Dashboard') }}
                                 </x-nav-link>
                             </div>
-                        @else
+                        @endif
+                        @if (Auth::user()->role_id == 1)
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex ">
                                 <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                                     {{ __('Admin Dashboard') }}
@@ -26,6 +50,14 @@
                         @endif
                     @endif
                 </div>
+
+                @if (Auth::check() == false || Auth::user()->role_id != 1)
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('index.rooms')" :active="request()->routeIs('index.rooms')">
+                            {{ __('Rooms') }}
+                        </x-nav-link>
+                    </div>
+                @endif
 
                 @if (Auth::check() == false)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex ">
@@ -38,6 +70,8 @@
                         </x-nav-link>
                     </div>
                 @endif
+
+
 
             </div>
 
@@ -113,12 +147,19 @@
                     <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-responsive-nav-link>
-                    @else
+                @else
                     <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                         {{ __('Admin Dashboard') }}
                     </x-responsive-nav-link>
                 @endif
             @endif
+            {{-- ///// --}}
+
+            @if (Auth::check() == false || Auth::user()->role_id != 1)
+                <x-responsive-nav-link :href="route('index.rooms')" :active="request()->routeIs('index.rooms')">
+                    {{ __('Rooms') }}</x-responsive-nav-link>
+            @endif
+
             @if (Auth::check() == false)
                 <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')">
                     {{ __('Log In') }}

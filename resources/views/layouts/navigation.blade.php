@@ -8,25 +8,29 @@
                     <a href="{{ route('dashboard') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
+
                     <!-- Navigation Links -->
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex ">
+                    <div class=" space-x-8 sm:-my-px sm:ml-10 sm:flex ">
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
                     </div>
                 </div>
 
-                    @if (Auth::check() == false)
-                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex ">
-                            <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
-                                {{ __('Log in') }}
-                            </x-nav-link>
 
-                            <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
-                                {{ __('Register') }}
-                            </x-nav-link>
-                        </div>
-                    @endif
+
+
+                @if (Auth::check() == false)
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex ">
+                        <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                            {{ __('Log in') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                            {{ __('Register') }}
+                        </x-nav-link>
+                    </div>
+                @endif
 
             </div>
 
