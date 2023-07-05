@@ -96,17 +96,17 @@
                         </div> --}}
                             <div class="w-full flex justify-center items-center ">
                                 <div class="w-1/2 px-1">
-                                    <x-link-button href="{{ route('create.buildingimage', $room->id) }}"
+                                    <x-link-button href="{{ route('create.roomimage', $room->id) }}"
                                         class="bg-green-600 my-2 w-full text-center">Add image</x-link-button>
                                 </div>
                                 <div class="w-1/2 px-1">
-                                    <x-link-button href="{{ route('view.building', $room->id) }}"
+                                    <x-link-button href="{{ route('view.room', $room->id) }}"
                                         class="bg-orange-600 my-2 w-full text-center">View Room</x-link-button>
                                 </div>
                             </div>
                             <div class="w-full flex justify-center items-center ">
                                 <div class="w-1/2 px-1">
-                                    <x-link-button href="{{ route('edit.building', $room->id) }}"
+                                    <x-link-button href="{{ route('edit.room', $room->id) }}"
                                         class="bg-indigo-600 my-2 w-full text-center">Edit Room</x-link-button>
                                 </div>
                                 <div class="w-1/2 px-1">

@@ -51,7 +51,8 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
-        //
+        $room = Room::with('roomImages')->where('id', $room->id)->get();
+        return view('rooms.show-room-details', compact('room'));
     }
 
     /**
@@ -75,6 +76,10 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        //
+        if ($room->delete()) {
+            return redirect()->route('index.rooms')->with('success', 'The Room was succesffuly deleted');
+        } else {
+            return redirect()->route('index.rooms')->with('error', 'Something went wrong. Room cannot be deleted');
+        }
     }
 }

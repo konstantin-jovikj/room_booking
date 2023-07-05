@@ -8,6 +8,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\BildingImagesController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\RoomImageController;
+use App\Http\Livewire\EditRoom;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +52,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/rooms', [RoomController::class, 'index'])->name('index.rooms');
     Route::get('/room/create', [RoomController::class, 'create'])->name('create.room');
     Route::post('/room/store/',[RoomController::class,'store'])->name('store.room');
+    Route::get('/room/image/{room}',[RoomImageController::class,'create'])->name('create.roomimage');
+    Route::post('/room/image/store/{room}', [RoomImageController::class,'store'])->name('store.roomimage');
+    Route::get('/room/show/{room}', [RoomController::class, 'show'])->name('view.room');
+    Route::delete('room/image/delete/{roomImage}', [RoomImageController::class, 'destroy'])->name('delete.roomimage');
+
+    Route::delete('/room/delete/{room}', [RoomController::class, 'destroy'])->name('delete.room');
+    Route::get('/room/edit/{room}', EditRoom::class)->name('edit.room');
 });
 
 require __DIR__.'/auth.php';
