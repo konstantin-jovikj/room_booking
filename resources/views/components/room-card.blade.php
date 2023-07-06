@@ -122,6 +122,34 @@
                                     </div>
                                 </div>
                             @endif
+
+                            @if (Auth::check() && Auth::user()->isAdmin() == false)
+                                <div>
+                                    <div class="w-full flex justify-center items-center ">
+                                        <div class="w-1/2 px-1">
+                                            <x-link-button href="{{ route('book.room', $room->id) }}"
+                                                class="bg-green-600 my-2 w-full text-center">Book
+                                            </x-link-button>
+                                        </div>
+                                        <div class="w-1/2 px-1">
+                                            <x-link-button href="{{ route('view.room', $room->id) }}"
+                                                class="bg-orange-600 my-2 w-full text-center">View
+                                            </x-link-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                            @if (Auth::check() == false)
+                                <div>
+                                    <div class="w-full flex justify-center items-center ">
+                                        <div class="w-1/2 px-1">
+                                            <x-link-button href="{{ route('view.room', $room->id) }}"
+                                                class="bg-orange-600 my-2 w-full text-center">View Room
+                                            </x-link-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 @endforeach

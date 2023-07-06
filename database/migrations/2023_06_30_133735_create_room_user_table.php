@@ -17,8 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->dateTime('check_in');
             $table->dateTime('check_out');
-            $table->string('comment');
-            $table->integer('rate');
+            $table->string('comment')->nullable();
+            $table->integer('rate')->nullable();
             $table->timestamps();
 
             $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
