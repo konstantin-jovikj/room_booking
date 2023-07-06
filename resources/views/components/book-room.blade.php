@@ -1,5 +1,5 @@
+{{-- @dd($bookedRanges) --}}
 <div class="min-w-screen flex items-center p-5 lg:p-10 relative w-full">
-    {{-- @dd($room) --}}
 
 
 
@@ -18,8 +18,8 @@
                             <div class="p-8 bg-white w-1/2 shadow-lg rounded-lg">
                                 <h2 class="text-center text-lg font-bold text-red-800 uppercase">Book the room</h2>
 
-                                <form class=" mx-auto p-2 mt-2 rounded" action="{{ route('store.room.booking', $single_room) }}"
-                                    method="POST">
+                                <form class=" mx-auto p-2 mt-2 rounded"
+                                    action="{{ route('store.room.booking', $single_room) }}" method="POST">
                                     @csrf
                                     @method('POST')
                                     @if (session()->has('message'))
@@ -29,18 +29,22 @@
                                     @endif
 
                                     <div class="mb-4">
-                                        <input type="date"
-                                            class="w-full border @error('check_in') border-red-500 @enderror"
-                                            name="check_in" placeholder="Check In">
+                                        <input type="date" name="check_in" min="{{ date('Y-m-d') }}"
+                                            @foreach ($bookedRanges as $range)
+                                            @if (date('Y-m-d') >= $range->check_in && date('Y-m-d') <= $range->check_out)
+                                                disabled
+                                            @endif @endforeach>
                                         @error('check_in')
                                             <span class="text-red-500">{{ $message }}</span>
                                         @enderror
                                     </div>
 
                                     <div class="mb-4">
-                                        <input type="date"
-                                            class="w-full border @error('check_out') border-red-500 @enderror"
-                                            name="check_out" placeholder="Check Out">
+                                        <input type="date" name="check_out" min="{{ date('Y-m-d') }}"
+                                            @foreach ($bookedRanges as $range)
+                                            @if (date('Y-m-d') >= $range->check_in && date('Y-m-d') <= $range->check_out)
+                                                disabled
+                                            @endif @endforeach>
                                         @error('check_out')
                                             <span class="text-red-500">{{ $message }}</span>
                                         @enderror
@@ -58,5 +62,4 @@
                 </div>
     @endforeach
 </div>
-</div>
-</div>
+

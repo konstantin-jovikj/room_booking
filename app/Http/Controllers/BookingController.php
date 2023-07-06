@@ -11,8 +11,42 @@ class BookingController extends Controller
 {
     public function bookRoom(Room $room)
     {
-        $room = Room::with('roomImages', 'building')->where('id', $room->id)->get();
-        return view('rooms.book-room-page', compact('room'));
+        // $room = Room::with('roomImages', 'building')->where('id', $room->id)->get();
+        // return view('rooms.book-room-page', compact('room'));
+
+        $user = auth()->user();
+
+        $room = Room::with('roomImages', 'building', 'users')->findOrFail($room->id);
+
+        $bookedRanges = $room->users->map(function ($user) {
+            return [
+                'check_in' => $user->pivot->check_in,
+                'check_out' => $user->pivot->check_out,
+            ];
+        })->toArray();
+
+
+        $events = [];
+
+        // $appointments = Room::with('roomImages', 'building', 'users')->findOrFail($room->id)->get();
+
+        // foreach ($bookedRanges as $bookedRange) {
+        //     $events[] = [
+        //         'check_in' => $bookedRange['check_in'],
+        //         'check_out' => $bookedRange['check_out'],
+        //     ];
+        // }
+
+        $events = $room->users->map(function ($user) {
+            return [
+                'title' => 'Booked',
+                'start' => $user->pivot->check_in,
+                'end' => $user->pivot->check_out,
+            ];
+        })->toArray();
+
+        // dd($events);
+        return view('rooms.book-room-page', compact('room', 'bookedRanges', 'events'));
     }
 
     public function store(Request $request, Room $room)

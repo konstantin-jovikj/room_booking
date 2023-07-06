@@ -37,3 +37,4 @@ class Room extends Model
         ->withPivot('check_in', 'check_out')->withTimestamps();
     }
 }
+
