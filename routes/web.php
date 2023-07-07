@@ -40,6 +40,8 @@ Route::get('/dashboard/admin', function () {
 })->middleware(['auth', 'verified'])->name('admin.dashboard');
 
 Route::middleware('auth')->group(function () {
+
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -64,6 +66,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/room/edit/{room}', EditRoom::class)->name('edit.room');
     Route::get('/room/book/{room}', [BookingController::class, 'bookRoom'])->name('book.room');
     Route::post('/room/booking/store/{room}', [BookingController::class, 'store'])->name('store.room.booking');
+    Route::get('/mybookings', [BookingController::class, 'userBookings'])->name('user.bookings');
+
+    Route::delete('/booking/delete/{pivot_id}/{room_id}', [BookingController::class, 'destroyBooking'])->name('delete.booking');
 });
 
 Route::get('/rooms', [RoomController::class, 'index'])->name('index.rooms');

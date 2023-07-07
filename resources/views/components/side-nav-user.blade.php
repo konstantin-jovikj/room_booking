@@ -7,8 +7,8 @@
 
 
     <div
-        class="pl-12 py-2 hover:bg-gray-600 {{ request()->routeIs('index.buildings') ? 'border-b-2 border-sky-500 bg-gray-600' : 'border-b border-gray-400 bg-gray-800' }}">
-        <a href="" class="text-gray-200 hover:no-underline hover:text-gray-100">My Bookings</a>
+        class="pl-12 py-2 hover:bg-gray-600 {{ request()->routeIs('user.bookings') ? 'border-b-2 border-sky-500 bg-gray-600' : 'border-b border-gray-400 bg-gray-800' }}">
+        <a href="{{route('user.bookings')}}" class="text-gray-200 hover:no-underline hover:text-gray-100">My Bookings</a>
     </div>
 
 </div>

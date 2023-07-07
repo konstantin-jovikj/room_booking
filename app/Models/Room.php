@@ -33,8 +33,8 @@ class Room extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'room_user', 'room_id', 'user_id')
-        ->withPivot('check_in', 'check_out')->withTimestamps();
+        return $this->belongsToMany(User::class, 'room_user')
+        ->withPivot( 'id','check_in', 'check_out')->withTimestamps();
     }
 }
 

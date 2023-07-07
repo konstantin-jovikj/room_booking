@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <div class="w-full overflow-hidden flex flex-col sm:flex-row" style="min-height: calc(100vh - 65px);">
-        <x-side-nav></x-side-nav>
+        <x-side-nav-user></x-side-nav-user>
         {{-- <x-book-room :room="$room :bookedRanges="$bookedRanges" /> --}}
 
         <div class="min-w-screen flex flex-col items-start justify-center p-5 lg:p-10 relative w-full gap-4">
