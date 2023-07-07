@@ -28,15 +28,6 @@ class BookingController extends Controller
 
         $events = [];
 
-        // $appointments = Room::with('roomImages', 'building', 'users')->findOrFail($room->id)->get();
-
-        // foreach ($bookedRanges as $bookedRange) {
-        //     $events[] = [
-        //         'check_in' => $bookedRange['check_in'],
-        //         'check_out' => $bookedRange['check_out'],
-        //     ];
-        // }
-
         $events = $room->users->map(function ($user) {
             return [
                 'title' => 'Booked',
@@ -57,6 +48,32 @@ class BookingController extends Controller
 
         $check_in = $request->check_in;
         $check_out = $request->check_out;
+
+
+        // $user = auth()->user();
+
+        // $room = Room::with('roomImages', 'building', 'users')->findOrFail($room->id);
+
+        $bookedRanges = $room->users->map(function ($user) {
+            return [
+                'check_in' => $user->pivot->check_in,
+                'check_out' => $user->pivot->check_out,
+            ];
+        });
+
+        // foreach($bookedRanges as $bookRange)
+        // {
+        //     if ($check_in )
+        // }
+
+        $conflictingBooking = $bookedRanges->first(function ($bookRange) use ($check_in, $check_out) {
+            return $check_in >= $bookRange['check_in'] && $check_in <= $bookRange['check_out']
+                || $check_out >= $bookRange['check_in'] && $check_out <= $bookRange['check_out'];
+        });
+
+        if ($conflictingBooking) {
+            return redirect()->route('index.rooms')->with('error', 'The selected dates are already occupied. Please choose different dates.');
+        }
 
 
         if ($user->rooms()->attach($room->id, [

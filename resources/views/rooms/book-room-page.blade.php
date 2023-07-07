@@ -4,12 +4,12 @@
         <x-side-nav></x-side-nav>
         {{-- <x-book-room :room="$room :bookedRanges="$bookedRanges" /> --}}
 
-        <div class="min-w-screen flex items-center p-5 lg:p-10 relative w-full">
+        <div class="min-w-screen flex flex-col items-start justify-center p-5 lg:p-10 relative w-full gap-4">
 
-            <div class="p-8 bg-white w-full shadow-lg rounded-lg min-w-[380px] max-w-[420px]">
-                <h2 class="text-center text-lg font-bold text-red-800 uppercase">Book the room</h2>
+            <div class="p-8 bg-white w-full shadow-lg rounded-lg min-w-[380px] max-w-[650px] ">
+                <h2 class="text-center text-lg font-bold text-red-800 uppercase">Book the room dates</h2>
 
-                <form class=" mx-auto p-2 mt-2 rounded border-2" action="{{ route('store.room.booking', $room->id) }}"
+                <form class=" mx-auto p-2 mt-2 rounded" action="{{ route('store.room.booking', $room->id) }}"
                     method="POST">
                     @csrf
                     @method('POST')
@@ -19,24 +19,17 @@
                         </div>
                     @endif
 
-                    <div class="mb-4">
-                        <label for="check_in">Check-in Date:</label>
-                        <input type="date" name="check_in" min="{{ date('Y-m-d') }}"
-                            @foreach ($bookedRanges as $range)
-                                                    @if (date('Y-m-d') >= $range['check_in'] && date('Y-m-d') <= $range['check_out'])
-                                                        disabled
-                                                    @endif @endforeach>
+                    <div class="mb-4 w-full flex  items-center  justify-items-end ">
+                        <label for="check_in" class=" w-1/3 text-right pr-4">Check-in:</label>
+                        <input type="date" name="check_in" min="{{ date('Y-m-d') }}" class="w-2/3">
                         @error('check_in')
                             <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <div class="mb-4">
-                        <label for="check_out">Check-out Date:</label>
-                        <input type="date" name="check_out" min="{{ date('Y-m-d') }}"
-                            @foreach ($bookedRanges as $range)
-                                                    @if (date('Y-m-d') >= $range['check_in'] && date('Y-m-d') <= $range['check_out']) disabled
-                                                    @endif @endforeach>
+                    <div class="mb-4 w-full flex  items-center  justify-items-end ">
+                        <label for="check_out" class=" w-1/3 text-right pr-4">Check-out:</label>
+                        <input type="date" name="check_out" min="{{ date('Y-m-d') }}" class="w-2/3">
                         @error('check_out')
                             <span class="text-red-500">{{ $message }}</span>
                         @enderror
@@ -48,7 +41,9 @@
                 </form>
 
             </div>
-            <div id="calendar"></div>
+            <div id="calendar" class="max-w-[650px] bg-white p-8">
+
+            </div>
 
 
             @push('scripts')
@@ -68,4 +63,6 @@
                     });
                 </script>
             @endpush
+        </div>
+    </div>
 </x-app-layout>
