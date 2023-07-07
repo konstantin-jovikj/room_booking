@@ -11,8 +11,7 @@ class BookingController extends Controller
 {
     public function bookRoom(Room $room)
     {
-        // $room = Room::with('roomImages', 'building')->where('id', $room->id)->get();
-        // return view('rooms.book-room-page', compact('room'));
+
 
         $user = auth()->user();
 
@@ -50,10 +49,6 @@ class BookingController extends Controller
         $check_out = $request->check_out;
 
 
-        // $user = auth()->user();
-
-        // $room = Room::with('roomImages', 'building', 'users')->findOrFail($room->id);
-
         $bookedRanges = $room->users->map(function ($user) {
             return [
                 'check_in' => $user->pivot->check_in,
@@ -61,10 +56,6 @@ class BookingController extends Controller
             ];
         });
 
-        // foreach($bookedRanges as $bookRange)
-        // {
-        //     if ($check_in )
-        // }
 
         $conflictingBooking = $bookedRanges->first(function ($bookRange) use ($check_in, $check_out) {
             return $check_in >= $bookRange['check_in'] && $check_in <= $bookRange['check_out']
