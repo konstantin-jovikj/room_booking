@@ -68,7 +68,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/room/booking/store/{room}', [BookingController::class, 'store'])->name('store.room.booking');
     Route::get('/mybookings', [BookingController::class, 'userBookings'])->name('user.bookings');
 
-    Route::delete('/booking/delete/{pivot_id}/{room_id}', [BookingController::class, 'destroyBooking'])->name('delete.booking');
+    Route::delete('/booking/delete/{pivot_id}', [BookingController::class, 'destroyBooking'])->name('delete.booking');
 });
 
 Route::get('/rooms', [RoomController::class, 'index'])->name('index.rooms');

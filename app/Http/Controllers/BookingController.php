@@ -42,10 +42,9 @@ class BookingController extends Controller
     public function store(Request $request, Room $room)
     {
 
-        // $user = auth()->user();
         $id = Auth::id();
         $user = User::find($id);
-        // $user = User::auth();
+
 
 
         $check_in = $request->check_in;
@@ -87,22 +86,27 @@ class BookingController extends Controller
         $user = User::find($id);
         // $user = User::auth();
 
-        $myBookings = $user->rooms()->with('building', 'roomImages')->get();
+        $myBookings = $user->rooms()->get();
+
         // dd($myBookings);
         return view('mybookings-view', compact('myBookings'));
     }
 
-    public function destroyBooking($pivot_id, $room_id)
+    public function destroyBooking($pivot_id)
     {
 
         $idUser = Auth::id();
         $user = User::find($idUser);
-        $room = Room::find($room_id);
 
-        $room->users()->detach($pivot_id);
+
+        $pivot_id = intval($pivot_id); // Convert to integer
+
+        // dd($idUser, $pivot_id);
         // $user->rooms()->detach($pivot_id);
 
-        dd($room);
+        // dd($pivot_id);
+        $user->rooms()->detach($pivot_id);
         return redirect()->route('index.rooms')->with('success', 'Booking deleted successfully.');
     }
 }
+

@@ -55,10 +55,18 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class, 'role_id');
     }
 
+    // public function rooms()
+    // {
+    //     return $this->belongsToMany(Room::class, 'room_user', 'user_id', 'room_id')
+    //         ->withPivot('id', 'check_in', 'check_out')
+    //         ->withTimestamps();
+    // }
+
     public function rooms()
     {
-        return $this->belongsToMany(Room::class, 'room_user')
-        ->withPivot('id','check_in', 'check_out')->withTimestamps();
+        return $this->belongsToMany(Room::class)
+            ->withPivot('id','check_in', 'check_out')
+            ->withTimestamps();
     }
 
     public function isAdmin()

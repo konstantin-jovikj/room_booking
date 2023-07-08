@@ -1,7 +1,7 @@
 <div class="w-full bg-gray-100 h-full">
     <div class="bg-white w-full p-12" style="min-height: calc(100vh - 65px);">
         <h2 class="text-xl uppercase font-bold text-emerald-700">My Bookings</h2>
-
+{{-- @dd($myBookings) --}}
         <div class="flex flex-col">
             <div class="-m-1.5 overflow-x-auto">
                 <div class="p-1.5 min-w-full inline-block align-middle">
@@ -49,7 +49,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             {{-- @if ($myBooking->pivot->check_out < now()) --}}
                                             <form method="POST"
-                                                action="{{ route('delete.booking', ['pivot_id' => $myBooking->pivot->id, 'room_id' => $myBooking->id]) }}">
+                                                action="{{ route('delete.booking', $myBooking->pivot->id) }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="text-red-500 hover:text-red-700"
@@ -70,7 +70,7 @@
         </div>
 
     </div>
-    {{-- <div>
+    <div>
 
     @foreach ($myBookings as $myBooking)
     <p>ID: {{ $myBooking->pivot->id }}</p>
@@ -81,4 +81,4 @@
         <p>Check-out: {{ $myBooking->pivot->check_out }}</p>
         <hr>
     @endforeach
-</div> --}}
+</div>
