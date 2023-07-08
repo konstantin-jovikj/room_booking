@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Room;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
@@ -13,31 +14,27 @@ class BookingController extends Controller
     {
 
 
-        $user = auth()->user();
+        $id = Auth::id();
+        $user = User::find($id);
 
         $room = Room::with('roomImages', 'building', 'users')->findOrFail($room->id);
-
-        $bookedRanges = $room->users->map(function ($user) {
-            return [
-                'check_in' => $user->pivot->check_in,
-                'check_out' => $user->pivot->check_out,
-            ];
-        })->toArray();
-
 
         $events = [];
 
         $events = $room->users->map(function ($user) {
             return [
-                'title' => 'Booked',
+                'title' => 'BOOKED DATES',
                 'start' => $user->pivot->check_in,
                 'end' => $user->pivot->check_out,
             ];
         })->toArray();
 
         // dd($events);
-        return view('rooms.book-room-page', compact('room', 'bookedRanges', 'events'));
+        return view('rooms.book-room-page', compact('room', 'events'));
     }
+
+
+
 
     public function store(Request $request, Room $room)
     {
@@ -69,14 +66,11 @@ class BookingController extends Controller
         }
 
 
-        if ($user->rooms()->attach($room->id, [
+        ($user->rooms()->attach($room->id, [
             'check_in' => $check_in,
             'check_out' => $check_out
-        ])) {
-            return redirect()->route('index.rooms')->with('error', 'Something went wrong. Please try again later.');
-        } else {
-            return redirect()->route('index.rooms')->with('success', 'The booking was successful. Thank you!');
-        }
+        ]));
+        return redirect()->route('index.rooms')->with('success', 'The booking was successful. Thank you!');
     }
 
     public function userBookings()
@@ -94,19 +88,22 @@ class BookingController extends Controller
 
     public function destroyBooking($pivot_id)
     {
-
         $idUser = Auth::id();
         $user = User::find($idUser);
 
-
         $pivot_id = intval($pivot_id); // Convert to integer
 
-        // dd($idUser, $pivot_id);
-        // $user->rooms()->detach($pivot_id);
+        // Retrieve the pivot record from the table
+        $bookingForDelete = DB::table('room_user')->find($pivot_id);
 
-        // dd($pivot_id);
-        $user->rooms()->detach($pivot_id);
-        return redirect()->route('index.rooms')->with('success', 'Booking deleted successfully.');
+        if ($bookingForDelete) {
+            $user->rooms()->wherePivot('check_in', $bookingForDelete->check_in)
+                ->wherePivot('check_out', $bookingForDelete->check_out)
+                ->detach($bookingForDelete->room_id);
+
+            return redirect()->route('index.rooms')->with('success', 'Booking deleted successfully.');
+        } else {
+            return redirect()->route('index.rooms')->with('error', 'Error.');
+        }
     }
 }
-
