@@ -1,7 +1,7 @@
 <div class="w-full bg-gray-100 h-full">
     <div class="bg-white w-full p-12" style="min-height: calc(100vh - 65px);">
         <h2 class="text-xl uppercase font-bold text-emerald-700">My Bookings</h2>
-{{-- @dd($myBookings) --}}
+        {{-- @dd($myBookings) --}}
         <div class="flex flex-col">
             <div class="-m-1.5 overflow-x-auto">
                 <div class="p-1.5 min-w-full inline-block align-middle">
@@ -47,19 +47,19 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 ">
                                             {{ $myBooking->price }} Eur</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            {{-- @if ($myBooking->pivot->check_out < now()) --}}
+                                            @if ($myBooking->pivot->check_out < now())
                                             <form method="POST"
                                                 action="{{ route('delete.booking', $myBooking->pivot->id) }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="text-red-500 hover:text-red-700"
                                                     href="#">Delete</button>
-                                                {{-- @else --}}
-                                                {{-- <p class="text-green-700 uppercase font-bold">Still Active</p> --}}
-                                                {{-- @endif --}}
-                                            </form>
-                                        </td>
-                                    </tr>
+                                            @else
+                                                <p class="text-green-700 uppercase font-bold">Still Active</p>
+                                @endif
+                                </form>
+                                </td>
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -70,15 +70,3 @@
         </div>
 
     </div>
-    <div>
-
-    @foreach ($myBookings as $myBooking)
-    <p>ID: {{ $myBooking->pivot->id }}</p>
-        <p>Room ID: {{ $myBooking->id }}</p>
-        <p>Room Nr: {{ $myBooking->room_number }}</p>
-        <p>Building Name: {{ $myBooking->building->building_name }}</p>
-        <p>Check-in: {{ $myBooking->pivot->check_in }}</p>
-        <p>Check-out: {{ $myBooking->pivot->check_out }}</p>
-        <hr>
-    @endforeach
-</div>
