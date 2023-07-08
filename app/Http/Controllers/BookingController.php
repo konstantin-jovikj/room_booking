@@ -10,29 +10,54 @@ use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
+    // public function bookRoom(Room $room)
+    // {
+
+
+    //     $id = Auth::id();
+    //     $user = User::find($id);
+
+    //     $room = Room::with('roomImages', 'building', 'users')->findOrFail($room->id);
+
+    //     $events = [];
+
+    //     $events = $room->users->map(function ($user) {
+    //         return [
+    //             'title' => 'BOOKED DATES',
+    //             'start' => $user->pivot->check_in,
+    //             'end' => $user->pivot->check_out,
+    //         ];
+    //     })->toArray();
+
+    //     // dd($events);
+    //     return view('rooms.book-room-page', compact('room', 'events'));
+    // }
+
+
+
     public function bookRoom(Room $room)
     {
-
-
         $id = Auth::id();
         $user = User::find($id);
 
         $room = Room::with('roomImages', 'building', 'users')->findOrFail($room->id);
 
-        $events = [];
-
         $events = $room->users->map(function ($user) {
+            $start = $user->pivot->check_in;
+            $end = $user->pivot->check_out;
+
+            // Adjust the end date by adding one day
+            $endAdjusted = date('Y-m-d', strtotime($end . ' +1 day'));
+
             return [
                 'title' => 'BOOKED DATES',
-                'start' => $user->pivot->check_in,
-                'end' => $user->pivot->check_out,
+                'start' => $start,
+                'end' => $endAdjusted,
             ];
         })->toArray();
 
-        // dd($events);
         return view('rooms.book-room-page', compact('room', 'events'));
     }
-
 
 
 
@@ -75,14 +100,12 @@ class BookingController extends Controller
 
     public function userBookings()
     {
-        // $user = Auth::user();
+
         $id = Auth::id();
         $user = User::find($id);
-        // $user = User::auth();
 
         $myBookings = $user->rooms()->get();
 
-        // dd($myBookings);
         return view('mybookings-view', compact('myBookings'));
     }
 
@@ -91,9 +114,8 @@ class BookingController extends Controller
         $idUser = Auth::id();
         $user = User::find($idUser);
 
-        $pivot_id = intval($pivot_id); // Convert to integer
+        $pivot_id = intval($pivot_id);
 
-        // Retrieve the pivot record from the table
         $bookingForDelete = DB::table('room_user')->find($pivot_id);
 
         if ($bookingForDelete) {

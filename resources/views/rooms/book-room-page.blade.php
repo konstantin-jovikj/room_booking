@@ -55,8 +55,9 @@
                         var calendarEl = document.getElementById('calendar');
                         var calendar = new FullCalendar.Calendar(calendarEl, {
                             initialView: 'dayGridMonth',
-
+                            allDay: true,
                             events: @json($events),
+                            eventColor: 'orange',
                         });
                         calendar.render();
                     });
