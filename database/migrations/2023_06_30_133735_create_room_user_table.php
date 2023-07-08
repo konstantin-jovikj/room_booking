@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('room_id');
             $table->unsignedBigInteger('user_id');
-            $table->dateTime('check_in');
-            $table->dateTime('check_out');
+            $table->date('check_in')->nullable();
+            $table->date('check_out')->nullable();
             $table->string('comment')->nullable();
             $table->integer('rate')->nullable();
             $table->timestamps();
