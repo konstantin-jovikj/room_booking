@@ -11,9 +11,18 @@ class MainDashboard extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+
+    public $buildings;
+    public $rooms;
+    public $users;
+    public $bookings;
+
+    public function __construct($buildings,$rooms, $users, $bookings)
     {
-        //
+        $this->buildings = $buildings;
+        $this->rooms = $rooms;
+        $this->users = $users;
+        $this->bookings = $bookings;
     }
 
     /**
