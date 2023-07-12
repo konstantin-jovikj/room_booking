@@ -26,7 +26,7 @@
     <x-intro-text />
     <x-room-card :buildings="$buildings" :rooms="$rooms" />
 
-
+    <livewire:footer />
 </body>
 
 </html>

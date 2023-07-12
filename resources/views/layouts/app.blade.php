@@ -42,10 +42,12 @@
         <main>
             {{ $slot }}
         </main>
+
     </div>
 
     @livewireScripts
     @stack('scripts')
+    <script src="https://kit.fontawesome.com/0841462b34.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
