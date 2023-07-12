@@ -15,12 +15,12 @@
     @endif
 
 
-    <div class="min-h-screen flex justify-center items-center w-full">
+    <div class="min-h-screen flex justify-center mt-6 w-full">
         <div class="md:px-4 md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 space-y-4 md:space-y-0">
             @if (isset($buildings))
                 @foreach ($buildings as $building)
                     <div
-                        class="max-w-sm bg-white px-6 pt-6 pb-2 rounded-xl shadow-lg transform hover:scale-105 transition duration-500">
+                        class="max-w-sm bg-white px-6 pt-6 pb-2 rounded-xl shadow-lg transform hover:scale-105 transition duration-500" style="height: max-content; min-height: 450px">
                         <div class="relative">
 
 

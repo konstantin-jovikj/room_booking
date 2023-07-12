@@ -6,9 +6,9 @@
         @endif
 
         @if (Auth::check() && Auth::user()->role_id == 2)
-        <x-side-nav-user></x-side-nav-user>
-    @endif
-        <x-room-card :buildings="$buildings" :rooms="$rooms"/>
+            <x-side-nav-user></x-side-nav-user>
+        @endif
+        <x-room-card :buildings="$buildings" :rooms="$rooms" />
 
     </div>
 </x-app-layout>

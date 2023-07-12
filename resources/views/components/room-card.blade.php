@@ -5,11 +5,7 @@
     @if (Auth::check() && Auth::user()->role_id == 1)
         @if (isset($buildings) && count($buildings) == 0)
             <h2 class="text-xl pl-10 bg-orange-500 text-white p-2">
-                You have to add building and then you can add rooms
-            </h2>
-        @else
-            <h2 class="text-xl pl-10 bg-emerald-500 text-white p-2">
-                You have {{ count($buildings) }} building(s) available
+                Please add a building before adding rooms. Once a building is added, you can proceed to add rooms within it.
             </h2>
         @endif
     @endif
@@ -44,12 +40,12 @@
         {{-- Rooms are added --}}
 
 
-        <div class="min-h-screen flex justify-center items-center w-full">
+        <div class="min-h-screen flex justify-center  w-full mt-6">
             <div class="md:px-4 md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 space-y-4 md:space-y-0">
                 @if (isset($rooms))
                     @foreach ($rooms as $room)
                         <div
-                            class="max-w-sm bg-white px-6 pt-6 pb-2 rounded-xl shadow-lg transform hover:scale-105 transition duration-500">
+                            class="max-w-sm bg-white px-6 pt-6 pb-2 rounded-xl shadow-lg transform hover:scale-105 transition duration-500" style="height: max-content; min-height: 550px">
 
                             <div class="relative">
 
